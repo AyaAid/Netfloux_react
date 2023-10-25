@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { auth} from '../../utils/firebase'
-import { User, onAuthStateChanged} from 'firebase/auth';
+import { User, getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 
 export default function AuthDetails() {
     const [authUser, setAuthUser] = useState<User | null>(null);
@@ -15,9 +15,10 @@ export default function AuthDetails() {
         return ()=>{listen()}
     }, []);
 
-    const signOut = () => {
-        auth.signOut().then(()=>{
-            console.log('Signed out');
+    const auth = getAuth();
+
+    const authOut = () => {
+        signOut(auth).then(()=>{
             }).catch((error)=>console.log(error));
             };   
   return (
@@ -25,7 +26,7 @@ export default function AuthDetails() {
       {authUser ? (
         <>
           <p>{`Signed In as ${authUser.email}`}</p>
-          <button onClick={signOut}>Sign Out</button>
+          <button onClick={authOut}>Sign Out</button>
         </>
       ) : (
         <p>Signed Out</p>

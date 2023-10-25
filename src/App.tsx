@@ -1,12 +1,12 @@
 import React from 'react';
-import './assets/styles/Style.scss';
-import Navbar from './components/navbar/Navbar';
+import logo from './logo.svg';
+import AppRouter from './routes/AppRouter';
 
 function App() {
   return (
-    <>
-    <Navbar/>
-    </>
+    <div className="App">
+      <AppRouter/>
+    </div>
   );
 }
 

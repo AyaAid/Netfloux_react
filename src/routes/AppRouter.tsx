@@ -2,7 +2,10 @@ import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Auth from "../views/Auth";
 import Home from "../views/Home";
+import DetailFilm from "../views/detailFilm/DetailFilm";
+import Calendar from "../views/calendar/Calendar";
 import DetailsSeries from "../views/DetailsSeries"; 
+
 
 
 function AppRouter() {
@@ -12,6 +15,8 @@ function AppRouter() {
         <Routes>
           <Route path="/" element={<Auth />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/detailFilm" element={<DetailFilm />} />
+          <Route path="/calendar" element={<Calendar />} />
           <Route path="/details" element={<DetailsSeries />} />
         </Routes>
       </BrowserRouter>

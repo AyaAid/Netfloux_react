@@ -1,8 +1,16 @@
 import React from "react";
 import "./Navbar.scss";
+import {useNavigate} from "react-router-dom";
 
 export default function Navbar() {
+    const navigate = useNavigate();
 
+    const redirectToHome = () => {
+        navigate('/home')
+    }
+    const redirectToCalendar = () => {
+        navigate('/calendar')
+    }
 
   return (
     <>
@@ -18,9 +26,10 @@ export default function Navbar() {
             <div className="nav-logo">
               <div className="nav-logo-child"></div>
             </div>
+            
             <ul className="nav-high-screen">
-              <li style={{ color: "white" }}>Accueil</li>
-              <li>Calendrier</li>
+              <li><a onClick={redirectToHome}>Accueil</a></li>
+              <li><a onClick={redirectToCalendar}>Calendrier</a></li>
               <li>Mes films</li>
               <li>Reprendre la lecture</li>
               <li>
@@ -63,8 +72,8 @@ export default function Navbar() {
           </div>
           <div className="menu-deroulant-page">
             <ul>
-              <li style={{ color: "white" }}>Accueil</li>
-              <li>Calendrier</li>
+              <li><a onClick={redirectToHome}>Accueil</a></li>
+              <li><a onClick={redirectToCalendar}>Calendrier</a></li>
 
               <li>Reprendre la lecture</li>
             </ul>

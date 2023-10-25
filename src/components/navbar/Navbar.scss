@@ -83,6 +83,7 @@ header {
 .menu-deroulant-profil ul li,
 .menu-deroulant-page ul li,
 .menu-deroulant-filtre ul li {
+    cursor: pointer;
   margin: 20px 0 20px 0;
 }
 
@@ -108,8 +109,8 @@ header {
 .nav-search {
   display: flex;
   margin: auto;
-  height: 28px;
-  width: 60%;
+  height: 30px;
+  width: 65%;
   background-color: var(--background);
   border: 1px var(--terciere) solid;
   text-align: center;
@@ -122,8 +123,8 @@ header {
   display: flex;
   position: relative;
   margin: auto;
-  height: 25px;
-  width: 25px;
+  height: 28px;
+  width: 28px;
   background-image: url("/assets/images/bell.png");
   background-position: center;
   background-size: contain;
@@ -227,6 +228,7 @@ header {
   display: none;
 }
 .menu-deroulant-high-screen ul li {
+    cursor: pointer;
   margin: 5px;
 }
 

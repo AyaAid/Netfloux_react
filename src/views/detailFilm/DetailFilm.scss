@@ -1,0 +1,68 @@
+.column-film{
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+}
+
+.detail-film-img{
+    background-image: url('/assets/images/film_ban.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 35%;
+    width: 100%;
+}
+
+.detail-film-info{
+    height: 180px;
+    display: flex;
+}
+
+.detail-film-info-left, .detail-film-info-right{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: baseline;
+}
+.detail-film-info-left ul, .detail-film-info-right ul{
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    
+}
+.detail-film-info-left ul li, .detail-film-info-right ul li{
+    margin: 4px;
+    font-size: 1.2rem;
+}
+
+.detail-film-info-right{
+    flex: 1;
+
+}
+
+.detail-film-description{
+    flex: 1;
+
+}
+
+.detail-film-description-title{
+    height: 80px;
+    display: flex;
+   border-top: 0.5px solid var(--terciere);
+   border-bottom: 0.5px solid var(--terciere);
+   margin-left: 5%;
+   margin-right: 5%;
+
+}
+
+.detail-film-description-title p{
+    margin: auto 0 auto 20px;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.detail-film-description-text{
+    padding: 20px;
+    height: 220px;
+    overflow-y: scroll;
+}

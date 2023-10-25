@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Auth from "../views/Auth";
 import Home from "../views/Home";
 
 
@@ -8,6 +9,8 @@ function AppRouter() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+
+          <Route path="/auth" element={<Auth />} />
           <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>

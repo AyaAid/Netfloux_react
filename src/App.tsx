@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import './database/firebase';
+import './utils/firebase';
 import AppRouter from './routes/AppRouter';
 
 function App() {

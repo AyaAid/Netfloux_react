@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { auth } from "../../utils/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { auth, provider } from "../../utils/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 export default function SignIn() {
+  const [value, setValue] = useState<string | null>("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const signIng = (e: { preventDefault: () => void; }) => {
@@ -14,6 +15,22 @@ export default function SignIn() {
         console.log(error)
     })
   };
+
+  const handleClick=()=>{
+    signInWithPopup(auth, provider).then((data)=>{
+      const userEmail = data.user.email;
+      setValue(userEmail);
+      localStorage.setItem("email", userEmail || "")
+    })
+  }
+
+   useEffect(() => {
+     const storedEmail = localStorage.getItem("email");
+     if (storedEmail !== null) {
+       setValue(storedEmail);
+     }
+   }, []);
+
   return (
     <div>
       <form onSubmit={signIng}>
@@ -32,6 +49,7 @@ export default function SignIn() {
         />
         <button type="submit">Log In</button>
       </form>
+      <button onClick={handleClick}>Sign In with Google</button>
     </div>
   );
 }

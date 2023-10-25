@@ -62,4 +62,4 @@ async function getImage(ids: string) {
     }
 }
 
-export {getShowsList};
+export { api, apiImage, getShowsList};

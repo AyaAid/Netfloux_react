@@ -1,0 +1,315 @@
+/*BARRE DE NAVIGATION (TOUT EST ENGLOBE DEDANS)*/
+nav {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  header {
+    z-index: 100;
+    background-color: var(--navcolor);
+    display: flex;
+    height: 60px;
+    width: 100%;
+    border-bottom: 1px solid var(--background);
+  }
+  /*BARRE DE NAVIGATION*/
+  .nav-left,
+  .nav-right {
+    display: flex;
+    flex: 1;
+    
+  }
+  
+  
+  /* LOGO NETFLOUX*/
+  .nav-logo {
+    max-width: 200px;
+    height: 24px;
+    flex: 1;
+    display: flex;
+    margin: auto 0 auto 0;
+  }
+  .nav-logo-child {
+    margin: auto;
+    width: 90%;
+    height: 100%;
+    background-image: url("/assets/images/netfloux.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  /* LOGO NETFLOUX*/
+  
+  /*HAMBURGER POUR MOBILE*/
+  .nav-hamburger {
+    height: 32px;
+    width: 32px;
+    display: flex;
+    position: relative;
+    margin: auto 0px auto 10px;
+    flex-direction: column-reverse;
+    display: flex;
+    justify-content: space-around;
+  }
+  .nav-hamburger-top,
+  .nav-hamburger-middle,
+  .nav-hamburger-bottom {
+    background-color: white;
+    height: 2px;
+    width: 100%;
+  }
+  /*HAMBURGER POUR MOBILE*/
+  
+  /*MENU DEROULANT POUR MOBILE*/
+  .menu-deroulant {
+    position: absolute;
+    top: 60px;
+    height: calc(100% - 60px);
+    width: 200px;
+    background-color: black;
+    transform: translate(-100%);
+    transition: all 0.3s ease-out;
+    padding: 20px;
+  }
+  .menu-deroulant-profil,
+  .menu-deroulant-page {
+    border-bottom: 1px solid var(--terciere);
+    font-size: 1.1rem;
+  }
+  
+  .menu-deroulant-filtre {
+    font-size: 1.1rem;
+  }
+  
+  .menu-deroulant-profil ul li,
+  .menu-deroulant-page ul li,
+  .menu-deroulant-filtre ul li {
+    margin: 20px 0 20px 0;
+  }
+  
+  .menu-deroulant-profil-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    margin-right: 20px;
+  }
+  .menu-deroulant-profil-img {
+    background-image: url("/assets/images/profil.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 15%;
+    height: 40px;
+    width: 40px;
+  }
+  /*MENU DEROULANT POUR MOBILE*/
+  
+  /*BARRE DE RECHERCHE*/
+  .nav-search {
+    display: flex;
+    margin: auto;
+    height: 28px;
+    width: 60%;
+    background-color: var(--background);
+    border: 1px var(--terciere) solid;
+    text-align: center;
+    color: var(--terciere);
+  }
+  
+  /*NOTIFS*/
+  .nav-bell {
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    margin: auto;
+    height: 25px;
+    width: 25px;
+    background-image: url("/assets/images/bell.png");
+    background-position: center;
+    background-size: contain;
+    border: 1px solid white;
+    border-radius: 50%;
+  }
+  .nav-bell-notif {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transform: translate(-50%, -50%);
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background-color: var(--secondary);
+  }
+  .nav-bell-notif p {
+    text-align: center;
+  }
+  /*NOTIFS*/
+  
+  /*ANIMATIONS HAMBURGER CLICK*/
+  .active .nav-hamburger-middle,
+  .active .nav-hamburger-bottom,
+  .active .nav-hamburger-top {
+    position: absolute;
+  }
+  .active .nav-hamburger-middle {
+    display: none;
+  }
+  .active .nav-hamburger-bottom {
+    transform: rotate(45deg);
+    transition: all 0.3s ease-out;
+  }
+  .active .nav-hamburger-top {
+    transform: rotate(-45deg);
+    transition: all 0.3s ease-out;
+  }
+  .active .menu-deroulant {
+    transform: translate(0%);
+    transition: all 0.3s ease-out;
+  }
+  /*ANIMATIONS HAMBURGER CLICK*/
+  
+  /*ELEMENTS BARRE DE NAV GRAND ECRAN*/
+  .nav-high-screen {
+    cursor: pointer;
+    display: none;
+    margin: auto;
+    color: white;
+    margin-left: 20px;
+  }
+  
+  .nav-high-screen li {
+    margin: 5px;
+  }
+  
+  .nav-profil {
+    cursor: pointer;
+    display: none;
+    margin: auto;
+    height: 32px;
+    width: 32px;
+    background-image: url("/assets/images/profil.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 15%;
+  }
+  /*ELEMENTS BARRE DE NAV GRAND ECRAN*/
+  
+  /*TRIANGLE MENU DEROULANT TABLETTE ET PLUS GRAND */
+  .menu-deroulant-triangle {
+    cursor: pointer;
+    background-image: url("/assets/images/triangle.png");
+    height: 18px;
+    width: 18px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: 0.1s ease-in-out;
+  }
+  .active-high-screen .menu-deroulant-triangle {
+    transform: rotate(180deg);
+    transition: 0.1s ease-in-out;
+  }
+  /*TRIANGLE MENU DEROULANT TABLETTE ET PLUS GRAND */
+  
+  /*MENU DEROULANT POUR GRAND ECRAN*/
+  .menu-deroulant-high-screen {
+    display: none;
+    position: absolute;
+    top: 60px;
+    background-color: black;
+    width: 100%;
+    height: 60px;
+  }
+  
+  .menu-deroulant-high-screen ul {
+    margin: auto;
+    display: none;
+  }
+  .menu-deroulant-high-screen ul li {
+    margin: 5px;
+  }
+  
+  .menu-deroulant-high-screen ul li:hover {
+  color: white;
+  }
+  
+  .active-high-screen .menu-deroulant-high-screen {
+    display: flex;
+    transform: translate(0, 0);
+    transition: 0.3s ease-in-out;
+  }
+  /*MENU DEROULANT POUR GRAND ECRAN*/
+  
+  /*RESPONSIVE -768px 1366px et +1920px */
+  @media screen and (min-width: 768px) {
+    .nav-hamburger {
+      display: none;
+    }
+    .nav-high-screen {
+      display: flex;
+    }
+  
+    .nav-left {
+      flex: 2.5;
+      margin-left: 5px;
+    }
+    .nav-right {
+
+      flex: 1;
+    }
+  
+    .nav-bell{
+      height: 35px;
+      width: 35px;
+    }
+  
+    .nav-profil {
+      display: block;
+      height: 35px;
+      width: 35px;
+    }
+    .menu-deroulant-triangle {
+      display: block;
+    }
+    .nav-search {
+      width: 50%;
+    }
+  
+    .menu-deroulant-high-screen ul {
+      display: flex;
+      cursor: pointer;
+    }
+  }
+  
+  @media screen and (min-width: 1366px) {
+    .nav-high-screen li {
+      font-size: 1.4rem;
+      margin: 15px;
+    }
+    .menu-deroulant-triangle {
+      height: 25px;
+      width: 25px;
+    }
+    .nav-search{
+      width: 65%;
+    }
+  
+    .nav-left {
+      flex: 4;
+    }
+  }
+  
+  @media screen and (min-width: 1920px) {
+    .nav-high-screen li {
+      font-size: 1.7rem;
+      margin: 15px;
+    }
+    .menu-deroulant-triangle {
+      height: 28px;
+      width: 28px;
+    }
+  }
+  /*RESPONSIVE -768px 1366px et +1920px */
+  

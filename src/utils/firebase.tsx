@@ -47,4 +47,88 @@ async function addFollowed(id?: string) {
     }
 }
 
-export {auth, db, provider, addFollowed};
+async function likes(id?: string) {
+  const user = auth.currentUser?.uid;
+
+  if (!id || !user) {
+    return;
+  }
+
+  const likesCollection = collection(db, "likes");
+
+  const querySnapshot = await getDocs(
+    query(
+      likesCollection,
+      where("filmId", "==", id),
+      where("user", "==", user)
+    )
+  );
+  const queryDislike = await getDocs(
+    query(collection(db, "dislikes"), where("filmId", "==", id), where("user", "==", user))
+  );
+
+  if (querySnapshot.size === 0) {
+    try {
+      if (queryDislike.size > 0) {
+        await deleteDoc(queryDislike.docs[0].ref);
+        console.log("Dislike supprimé");
+      } 
+      await addDoc(likesCollection, {
+        filmId: id,
+        user: user,
+      });
+      console.log("Like ajouté");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  } else {
+    try {
+      await deleteDoc(querySnapshot.docs[0].ref);
+      console.log("Like supprimé");
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  }
+}
+
+async function dislikes(id?: string) {
+  const user = auth.currentUser?.uid;
+
+  if (!id || !user) {
+    return;
+  }
+
+  const dislikesCollection = collection(db, "dislikes");
+
+  const querySnapshot = await getDocs(
+    query(dislikesCollection, where("filmId", "==", id), where("user", "==", user))
+  );
+  const queryLike = await getDocs(
+    query(collection(db, "likes"), where("filmId", "==", id), where("user", "==", user))
+  );
+
+  if (querySnapshot.size === 0) {
+    try {
+      if (queryLike.size > 0){
+        await deleteDoc(queryLike.docs[0].ref);
+        console.log("Like supprimé");
+      } 
+      await addDoc(dislikesCollection, {
+        filmId: id,
+        user: user,
+      });
+      console.log("Dislike ajouté");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  } else {
+    try {
+      await deleteDoc(querySnapshot.docs[0].ref);
+      console.log("Dislike supprimé");
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  }
+}
+
+export {auth, db, provider, addFollowed, likes, dislikes};

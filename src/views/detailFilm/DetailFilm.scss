@@ -19,6 +19,19 @@
   right: 18px;
   height: 35px;
   width: 35px;
+  background-image: url("/assets/images/star.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-film-fav-followed {
+  cursor: pointer;
+  z-index: 100;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  height: 35px;
+  width: 35px;
   background-image: url("/assets/images/star-2.png");
   background-size: cover;
   background-position: center;
@@ -136,7 +149,7 @@ h2 {
     z-index: 1;
     height: 100%;
   }
-  .detail-film-fav {
+  .detail-film-fav, .detail-film-fav-followed {
     height: 45px;
     width: 45px;
   }

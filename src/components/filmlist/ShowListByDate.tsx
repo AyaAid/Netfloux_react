@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { getTraktShowsByDate } from "../../utils/api";
+import "./ShowListByDate.scss";
 
 interface TraktEpisode {
   id: number;
@@ -57,25 +58,35 @@ function ShowListByDate() {
   const filteredEpisodes = filterEpisodesByDate(selectedDate);
 
   return (
-    <div>
-      <h1>Séries triées par date</h1>
-      <Calendar
-        onChange={(date) => {
-          if (date instanceof Date) {
-            setSelectedDate(date);
-          }
-        }}
-        value={selectedDate}
-      />
-      <ul>
+    <div className="page-calendar">
+      <div className="calendar-page-top">
+        <div className="background-model"></div>
+        <Calendar
+          className="calendar"
+          onChange={(date) => {
+            if (date instanceof Date) {
+              setSelectedDate(date);
+            }
+          }}
+          value={selectedDate}
+        />
+      </div>
+
+      <div className="calendar-page-bottom">
+        <div className="calendar-page-bottom-carousel">
         {filteredEpisodes.map((episode) => (
-          <li key={episode.id}>
-            <h3>{episode.show.title}</h3>
-            <p>Saison : {episode.episode.season}</p>
-            <p>Episode : {episode.episode.number}</p>
-          </li>
+          <div className="film-card">
+          
+            <li key={episode.id}>
+              <h3>{episode.show.title}</h3>
+              <p>Saison : {episode.episode.season}</p>
+              <p>Episode : {episode.episode.number}</p>
+            </li>
+          </div>
         ))}
-      </ul>
+        </div>
+        
+      </div>
     </div>
   );
 }

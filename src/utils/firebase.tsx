@@ -131,4 +131,39 @@ async function dislikes(id?: string) {
   }
 }
 
-export {auth, db, provider, addFollowed, likes, dislikes};
+async function addComment(id?: string, comment?: string) {
+  const user = auth.currentUser?.uid;
+  if (!id || !user) {
+    return;
+  }
+  const commentsCollection = collection(db, "comments");
+
+    try {
+      await addDoc(commentsCollection, {
+        filmId: id,
+        user: user,
+        comment: comment,
+      });
+      console.log("Commentaire ajouté");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  }
+
+  async function getComment(id?: string) {
+    const user = auth.currentUser?.uid;
+    if (!id || !user) {
+      return;
+    }
+    const commentsCollection = collection(db, "comments");
+
+    const querySnapshot = await getDocs(
+      query(
+        commentsCollection,
+        where("filmId", "==", id)
+      )
+    );
+      return querySnapshot
+}
+
+export {auth, db, provider, addFollowed, likes, dislikes, addComment, getComment};

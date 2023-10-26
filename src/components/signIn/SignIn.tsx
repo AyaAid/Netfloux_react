@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { auth, provider } from "../../utils/firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import "./SignIn.scss";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const [value, setValue] = useState<string | null>("");
@@ -15,6 +17,12 @@ export default function SignIn() {
         console.log(error)
     })
   };
+
+  const navigate = useNavigate();
+
+  const redirectToRegister = () => {
+    navigate('/register')
+}
 
   const handleClick=()=>{
     signInWithPopup(auth, provider).then((data)=>{
@@ -32,10 +40,12 @@ export default function SignIn() {
    }, []);
 
   return (
-    <div>
-      <form onSubmit={signIng}>
-        <h1>Login to your account</h1>
+    <div className="formLogin">
+      <div className="formLogin-centre">
+      <form className="formulaire" onSubmit={signIng}>
+        <h2>Connexion</h2>
         <input
+        className="input"
           type="email"
           placeholder="Entre ton email"
           value={email}
@@ -43,13 +53,22 @@ export default function SignIn() {
         />
         <input
           type="password"
+          className="input"
           placeholder="Entre ton mot de passe"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Log In</button>
+        <div className="google-div"  onClick={handleClick}>
+        <p><a className="google">Sign In with Google</a></p>
+        <div className="google-logo"></div>
+        </div>
+      
+        <button type="submit" className="submit">Log In</button>
       </form>
-      <button onClick={handleClick}>Sign In with Google</button>
+      
+      <p>Vous n'avez pas de compte ? <span className="link-register" onClick={redirectToRegister}>S'enregistrer</span></p>
+      </div>
+      
     </div>
   );
 }

@@ -14,7 +14,7 @@ function AppRouter() {
         <Routes>
           <Route path="/" element={<Auth />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/detailFilm" element={<DetailFilm />} />
+          <Route path="/film/:filmId" element={<DetailFilm />} />
           <Route path="/calendar" element={<Calendar />} />
         </Routes>
       </BrowserRouter>

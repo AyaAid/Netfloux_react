@@ -5,17 +5,16 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
         'trakt-api-key': `${process.env.REACT_APP_TRAKT_CLIENT_ID}`,
-        'trakt-api-version': '2'
-    }
+        'trakt-api-version': '2',
+    },
 });
 
 const apiImage = axios.create({
     method: 'GET',
     baseURL: 'https://api.themoviedb.org/3',
     headers: {
-        accept: 'application json',
-        Authorization: `Bearer ${process.env.REACT_APP_TMDB_API_KEY}}`
-    }
+        accept: 'application/json',
+    },
 });
 
 async function getShowsList(type?: string, page?: number) {
@@ -33,15 +32,15 @@ async function getShowsList(type?: string, page?: number) {
         const response = await api.get(endpoint);
         await Promise.all(
             response.data.map(async (element: {
-                ids: { tmdb: string; };
-                images: { poster: string; backdrops: string; };
+                ids: { tmdb: string };
+                images: { poster: string; backdrops: string };
             }) => {
-                element.images = await getImage(element.ids.tmdb)
+                element.images = await getImage(element.ids.tmdb);
                 return element;
             })
         );
 
-        console.log(response.data)
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Axios Error:', error);
@@ -51,10 +50,10 @@ async function getShowsList(type?: string, page?: number) {
 
 async function getImage(ids: string) {
     try {
-        const response = await apiImage.get(`/tv/${ids}/images`);
+        const response = await apiImage.get(`/tv/${ids}/images?api_key=${process.env.REACT_APP_TMDB_API_KEY}`);
         return {
             poster: "https://image.tmdb.org/t/p/w500" + response.data.posters[0].file_path,
-            backdrops: "https://image.tmdb.org/t/p/w500" + response.data.backdrops[0].file_path
+            backdrops: "https://image.tmdb.org/t/p/w500" + response.data.backdrops[0].file_path,
         };
     } catch (error) {
         console.error('Axios Error:', error);
@@ -74,4 +73,29 @@ async function getTraktShowsByDate(startDate: String, days: Number) {
   }
 }
 
-export {getShowsList, getTraktShowsByDate};
+async function getShowsDetails(ids: string) {
+    try {
+        const response = await api.get(`/shows/${ids}?extended=full`);
+        response.data.images = await getImage(response.data.ids.tmdb);
+        response.data.actors = await getMembers(response.data.ids.trakt);
+
+        console.log(response.data);
+
+        return response.data;
+    } catch (error) {
+        console.error('Axios Error:', error);
+        throw error;
+    }
+}
+
+async function getMembers(ids: string) {
+    try {
+        const response = await api.get(`/shows/${ids}/people?extended=full`);
+        return response.data;
+    } catch (error) {
+        console.error('Axios Error:', error);
+        throw error;
+    }
+}
+
+export {getShowsList, getShowsDetails, getTraktShowsByDate};

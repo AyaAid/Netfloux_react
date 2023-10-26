@@ -82,6 +82,14 @@ export default function DetailFilm() {
                   <p>{film.overview}</p>
                 </div>
               </div>
+              <div className="detail-film-avis">
+                <div className="detail-film-avis-title">
+                  <h2>Avis</h2>
+                </div>
+                <div className="detail-film-avis-text">
+                  <p>{film.overview}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

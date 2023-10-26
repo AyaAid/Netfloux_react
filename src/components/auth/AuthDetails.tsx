@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { auth} from '../../utils/firebase'
 import { User, getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 
 export default function AuthDetails() {
@@ -13,7 +12,7 @@ export default function AuthDetails() {
             }
         });
         return ()=>{listen()}
-    }, []);
+    });
 
     const auth = getAuth();
 

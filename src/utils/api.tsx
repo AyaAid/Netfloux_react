@@ -98,4 +98,15 @@ async function getMembers(ids: string) {
     }
 }
 
+export async function searchShows(query: string) {
+    try {
+        const response = await api.get(`/search/show?query=${query}`);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Axios Error:', error);
+        throw error;
+    }
+}
+
 export {getShowsList, getShowsDetails, getTraktShowsByDate};

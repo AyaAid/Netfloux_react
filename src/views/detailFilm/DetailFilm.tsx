@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar/Navbar";
 import "../detailFilm/DetailFilm.scss";
 import {getShowsDetails} from "../../utils/api";
 import {useParams} from "react-router-dom";
+import {addFollowed} from "../../utils/firebase";
 
 export default function DetailFilm() {
     const {filmId} = useParams();
@@ -72,6 +73,7 @@ export default function DetailFilm() {
                         </div>
                     </div>
                 </div>
+                <button onClick={() => addFollowed(filmId)}>Like</button>
             </>
         );
     } else {

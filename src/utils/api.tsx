@@ -62,4 +62,16 @@ async function getImage(ids: string) {
     }
 }
 
-export {getShowsList};
+async function getTraktShowsByDate(startDate: String, days: Number) {
+  try {
+    const endpoint = `/calendars/all/shows/${startDate}/${days}`;
+
+    const response = await api.get(endpoint);
+    return response.data;
+  } catch (error) {
+    console.error("Axios Error:", error);
+    throw error;
+  }
+}
+
+export {getShowsList, getTraktShowsByDate};

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import { getTraktShowsByDate } from "../../utils/api";
 
 interface TraktEpisode {
@@ -31,43 +33,49 @@ interface TraktEpisode {
 }
 
 function ShowListByDate() {
-  const [episodes, setEpisodes] = useState<{ [date: string]: TraktEpisode[] }>(
-    {}
-  );
+  const [episodes, setEpisodes] = useState<TraktEpisode[]>([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    getTraktShowsByDate("2022-09-01", 7).then((response: TraktEpisode[]) => {
-      const groupedEpisodes: { [date: string]: TraktEpisode[] } = {};
+    const days = 7;
 
-      response.forEach((episode) => {
-        const date = episode.first_aired.substring(0, 10);
-        if (!groupedEpisodes[date]) {
-          groupedEpisodes[date] = [];
-        }
-        groupedEpisodes[date].push(episode);
-      });
+    getTraktShowsByDate(selectedDate.toISOString().substring(0, 10), days).then(
+      (response: TraktEpisode[]) => {
+        setEpisodes(response);
+      }
+    );
+  }, [selectedDate]);
 
-      setEpisodes(groupedEpisodes);
+  const filterEpisodesByDate = (date: Date) => {
+    return episodes.filter((episode) => {
+      const episodeDate = new Date(episode.first_aired).toUTCString();
+      const selectedDate = date.toUTCString();
+      return episodeDate === selectedDate;
     });
-  }, []);
+  };
+
+  const filteredEpisodes = filterEpisodesByDate(selectedDate);
 
   return (
     <div>
-      {Object.entries(episodes).map(([date, episodesForDate]) => (
-        <div key={date}>
-          <h2>Date de sortie : {date}</h2>
-          <ul>
-            {episodesForDate.map((episode) => (
-              <li key={episode.id}>
-                <h3>{episode.title}</h3>
-                <p>Nom de la série : {episode.show.title}</p>
-                <p>Saison : {episode.episode.season}</p>
-                <p>Épisode : {episode.episode.number}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <h1>Séries triées par date</h1>
+      <Calendar
+        onChange={(date) => {
+          if (date instanceof Date) {
+            setSelectedDate(date);
+          }
+        }}
+        value={selectedDate}
+      />
+      <ul>
+        {filteredEpisodes.map((episode) => (
+          <li key={episode.id}>
+            <h3>{episode.show.title}</h3>
+            <p>Saison : {episode.episode.season}</p>
+            <p>Episode : {episode.episode.number}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

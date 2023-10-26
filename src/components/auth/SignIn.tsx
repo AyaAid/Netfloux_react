@@ -10,6 +10,8 @@ export default function SignIn() {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) =>  {
+
+        localStorage.setItem("email", email as string);
         console.log(userCredential)
     }).catch((error)=>{
         console.log(error)
@@ -20,7 +22,7 @@ export default function SignIn() {
     signInWithPopup(auth, provider).then((data)=>{
       const userEmail = data.user.email;
       setValue(userEmail);
-      localStorage.setItem("email", userEmail || "")
+      localStorage.setItem("email", userEmail as string);
     })
   }
 

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { auth} from '../../utils/firebase'
+import { useEffect, useState } from 'react'
 import { User, getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 
 export default function AuthDetails() {

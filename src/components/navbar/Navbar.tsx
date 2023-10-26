@@ -1,6 +1,7 @@
 import React from "react";
 import "./Navbar.scss";
 import {useNavigate} from "react-router-dom";
+import Profil from "../Profil/Profil";
 
 export default function Navbar() {
     const navigate = useNavigate();
@@ -11,6 +12,10 @@ export default function Navbar() {
     const redirectToCalendar = () => {
         navigate('/calendar')
     }
+    const redirectToProfil = () => {
+        navigate('/profil')
+    }
+
 
   return (
     <>
@@ -53,7 +58,7 @@ export default function Navbar() {
                 <p>0</p>
               </div>
             </div>
-            <div className="nav-profil"></div>
+            <div className="nav-profil" onClick={redirectToProfil}></div>
           </div>
         </header>
 
@@ -62,7 +67,7 @@ export default function Navbar() {
             <ul>
               <li>
                 <div className="menu-deroulant-profil-name">
-                  <div className="menu-deroulant-profil-img"></div>
+                  <div className="menu-deroulant-profil-img" ></div>
                   <p className="menu-deroulant-profil-pseudo">Kilian.rdgs</p>
                 </div>
               </li>

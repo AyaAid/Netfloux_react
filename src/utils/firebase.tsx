@@ -153,6 +153,8 @@ async function addComment(id?: string, comment?: string) {
   async function getComment(id?: string) {
     const user = auth.currentUser?.uid;
     if (!id || !user) {
+      console.log("id",id)
+      console.log("user",user)
       return;
     }
     const commentsCollection = collection(db, "comments");
@@ -163,6 +165,7 @@ async function addComment(id?: string, comment?: string) {
         where("filmId", "==", id)
       )
     );
+    console.log("query function", querySnapshot)
       return querySnapshot
 }
 

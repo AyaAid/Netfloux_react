@@ -32,7 +32,6 @@ export default function Navbar() {
                             <li><a onClick={redirectToHome}>Accueil</a></li>
                             <li><a onClick={redirectToCalendar}>Calendrier</a></li>
                             <li>Mes films</li>
-                            <li>Reprendre la lecture</li>
                             <li>
                                 <div
                                     className="menu-deroulant-triangle"

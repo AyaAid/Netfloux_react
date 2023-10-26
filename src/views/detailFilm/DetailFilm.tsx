@@ -11,8 +11,35 @@ export default function DetailFilm() {
   const [isFollowed, setIsFollowed] = React.useState(false);
   const [isLike, setIsLike] = React.useState(false);
   const [isDislike, setIsDislike] = React.useState(false);
-  const [comment, setComment] = React.useState<any>({});
+  const [comment, setComment] = React.useState("");
   const [comments, setComments] = React.useState<string[]>([]);
+
+async function fetchComments() {
+    
+  if (filmId) {
+    try {
+      const querySnapshot = await getComment(filmId);
+      console.log("query snapshot", querySnapshot)
+      console.log(filmId)
+
+      if (querySnapshot) {
+        const commentsData: string[] = [];
+        querySnapshot.docs.forEach((doc) => {
+          commentsData.push(doc.data().comment);
+        });
+        console.log("comment data", commentsData);
+        setComments(commentsData);
+      } else {
+        console.error("Aucun commentaire trouvé pour cet ID de film.");
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des commentaires : ",
+        error
+      );
+    }
+  }
+}
 
   const handleClick=()=> {
     addComment(filmId, comment)
@@ -27,13 +54,9 @@ export default function DetailFilm() {
       getShowsDetails(filmId).then((response) => {
         setFilm(response);
       });
-
-      const fetchedComments = getComment(filmId);
-      if (Array.isArray(fetchedComments)) {
-        setComments(fetchedComments);
-      }
-      console.log(fetchedComments)
+      
     }
+    fetchComments();
   }, [filmId]);
 
   function getStars(rating: number) {
@@ -154,11 +177,11 @@ export default function DetailFilm() {
                     ></textarea>
                   </form>
                   <button onClick={handleClick}>Submit</button>
-                    <div>
-                        {comments.map((commentData, index) => (
+                    <div className="comment-list">
+        {comments.map((commentData, index) => (
           <div key={index}>{commentData}</div>
         ))}
-                    </div>
+      </div>
                 </div>
               </div>
             </div>

@@ -23,6 +23,9 @@ export default function SignIn() {
   const redirectToRegister = () => {
     navigate('/register')
 }
+  const redirectToHome = () => {
+      navigate("/home");
+    };
 
   const handleClick=()=>{
     signInWithPopup(auth, provider).then((data)=>{
@@ -37,7 +40,12 @@ export default function SignIn() {
      if (storedEmail !== null) {
        setValue(storedEmail);
      }
-   }, []);
+
+     const user = auth.currentUser;
+     if (user) {
+       navigate("/home");
+     }
+   }, [navigate]);
 
   return (
     <div className="formLogin">

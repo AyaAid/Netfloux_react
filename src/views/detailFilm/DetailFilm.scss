@@ -5,7 +5,6 @@
 }
 
 .detail-film-img{
-    background-image: url('/assets/images/film_ban.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -22,7 +21,6 @@
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: baseline;
 }
 .detail-film-info-left ul, .detail-film-info-right ul{
     margin-left: 5%;

@@ -169,20 +169,20 @@ async function fetchComments() {
                   <h2>Avis</h2>
                 </div>
                 <div className="detail-film-avis-text">
-                  <form>
-                    <textarea
-                      placeholder="Votre avis"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                    ></textarea>
-                  </form>
-                  <button onClick={handleClick}>Submit</button>
-                    <div className="comment-list">
-        {comments.map((commentData, index) => (
-          <div key={index}>{commentData}</div>
-        ))}
-      </div>
-                </div>
+  <textarea
+    placeholder="Votre avis"
+    value={comment}
+    onChange={(e) => setComment(e.target.value)}
+  ></textarea>
+  <button onClick={handleClick}>Submit</button>
+</div>
+<div className="comment-separator"></div>
+<div className="comment-list">
+  {comments.map((commentData, index) => (
+    <div key={index}>{commentData}</div>
+  ))}
+</div>
+
               </div>
             </div>
           </div>

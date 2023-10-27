@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import Login from "../views/connexion/Login";
 import Register from "../views/connexion/Register";
@@ -6,32 +6,48 @@ import Home from "../views/Home";
 import DetailFilm from "../views/detailFilm/DetailFilm";
 import Calendar from "../views/calendar/Calendar";
 import { useAuthState } from "../utils/firebase";
-import Profil from "../components/Profil/Profil";
 
 function AppRouter() {
   const user = useAuthState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (user !== null) {
+      setIsLoading(false);
+    }
+  }, [user]);
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={isLoading ? null : <Login />} />
+          <Route path="/register" element={isLoading ? null : <Register />} />
           <Route
             path="/home"
-            element={user !== null ? <Home /> : <Navigate to="/" />}
+            element={
+              isLoading ? null : user !== null ? <Home /> : <Navigate to="/" />
+            }
           />
           <Route
             path="/film/:filmId"
-            element={user !== null ? <DetailFilm /> : <Navigate to="/" />}
+            element={
+              isLoading ? null : user !== null ? (
+                <DetailFilm />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
           <Route
             path="/calendar"
-            element={user !== null ? <Calendar /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/profil"
-            element={user !== null ? <Profil /> : <Navigate to="/" />}
+            element={
+              isLoading ? null : user !== null ? (
+                <Calendar />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
         </Routes>
       </BrowserRouter>

@@ -24,8 +24,11 @@ function useAuthState() {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
         setUser(authUser);
+        localStorage.setItem("user", JSON.stringify(authUser));
       } else {
+        
         setUser(null);
+        localStorage.removeItem("user");
       }
     });
 
@@ -36,6 +39,8 @@ function useAuthState() {
 
   return user;
 }
+
+
 
 async function addFollowed(id?: string) {
     const user = auth.currentUser?.uid;

@@ -15,6 +15,7 @@ export default function SignIn() {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) =>  {
         console.log(userCredential)
+        localStorage.setItem("user", JSON.stringify(users));
         navigate("/home");
     }).catch((error)=>{
         console.log(error)
@@ -26,26 +27,22 @@ export default function SignIn() {
   const redirectToRegister = () => {
     navigate('/register')
 }
-  const redirectToHome = () => {
-      navigate("/home");
-    };
 
   const handleClick=()=>{
     signInWithPopup(auth, provider).then((data)=>{
       const userEmail = data.user.email;
       setValue(userEmail);
-      localStorage.setItem("email", userEmail || "")
     })
   }
 
- useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    const currentUser = savedUser ? JSON.parse(savedUser) : null;
-    if (currentUser) {
-      setUsers(currentUser);
-      navigate('/home'); 
-    }
-  }, [navigate]);
+useEffect(() => {
+  const savedUser = localStorage.getItem("user");
+  const currentUser = savedUser ? JSON.parse(savedUser) : null;
+  if (currentUser) {
+    setUsers(currentUser);
+  }
+}, []);
+
 
   return (
     <div className="formLogin">

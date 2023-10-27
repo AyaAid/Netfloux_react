@@ -28,6 +28,10 @@ function AppRouter() {
             path="/calendar"
             element={user !== null ? <Calendar /> : <Navigate to="/" />}
           />
+          <Route
+            path="/profil"
+            element={user !== null ? <Calendar /> : <Navigate to="/" />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

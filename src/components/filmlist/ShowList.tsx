@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { getShowsList } from "../../utils/api";
+import React, {useEffect, useState} from "react";
+import {getShowsList} from "../../utils/api";
 import "./ShowList.scss";
+import {Link} from 'react-router-dom';
 
 interface Film {
+    ids: {
+        trakt: number;
+    };
     title: string;
     images: {
         backdrops: string;
@@ -10,8 +14,8 @@ interface Film {
 }
 
 interface ShowListProps {
-    slug: string; // Update this to match your actual prop names
-    name: string; // Update this to match your actual prop names
+    slug: string;
+    name: string;
 }
 
 function ShowList(props: ShowListProps) {
@@ -20,7 +24,7 @@ function ShowList(props: ShowListProps) {
     useEffect(() => {
         async function fetchData() {
             try {
-                const data = await getShowsList(props.slug, 1); // Use props.slug
+                const data = await getShowsList(props.slug, 1);
                 setFilms(data);
             } catch (error) {
                 console.error("Error fetching shows:", error);
@@ -28,19 +32,21 @@ function ShowList(props: ShowListProps) {
         }
 
         fetchData();
-    }, [props.slug]); // Use props.slug
+    }, [props.slug]);
 
     return (
         <div className="film-block">
-            <h3>{props.name}</h3> {/* Use props.name */}
+            <h3>{props.name}</h3>
             <div className="film-carousel">
                 {films.map((film) => (
                     <div className="film" key={film.title}>
                         <div className="film-image">
-                            <div className="film-image-ban">
-                                <h4>{film.title}</h4>
-                            </div>
-                            <img src={film.images.backdrops} alt="film" />
+                            <Link to={`/film/${film.ids.trakt}`}>
+                                <div className="film-image-ban">
+                                    <h4>{film.title}</h4>
+                                </div>
+                                <img src={film.images.backdrops} alt="film"/>
+                            </Link>
                         </div>
                     </div>
                 ))}

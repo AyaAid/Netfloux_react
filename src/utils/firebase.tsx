@@ -1,7 +1,7 @@
 import {initializeApp} from "firebase/app";
 import {getAuth, GoogleAuthProvider, onAuthStateChanged, User} from "firebase/auth";
 import {addDoc, collection, deleteDoc, getDocs, getFirestore, query, where} from "@firebase/firestore"
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 const firebaseConfig = initializeApp({
     apiKey: `${process.env.REACT_APP_API_KEY}`,
@@ -18,28 +18,27 @@ const db = getFirestore(firebaseConfig);
 const provider = new GoogleAuthProvider();
 
 function useAuthState() {
-  const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-      if (authUser) {
-        setUser(authUser);
-        localStorage.setItem("user", JSON.stringify(authUser));
-      } else {
-        
-        setUser(null);
-        localStorage.removeItem("user");
-      }
-    });
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+            if (authUser) {
+                setUser(authUser);
+                localStorage.setItem("user", JSON.stringify(authUser));
+            } else {
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+                setUser(null);
+                localStorage.removeItem("user");
+            }
+        });
 
-  return user;
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
+    return user;
 }
-
 
 
 async function addFollowed(id?: string) {
@@ -74,125 +73,137 @@ async function addFollowed(id?: string) {
 }
 
 async function likes(id?: string) {
-  const user = auth.currentUser?.uid;
+    const user = auth.currentUser?.uid;
 
-  if (!id || !user) {
-    return;
-  }
-
-  const likesCollection = collection(db, "likes");
-
-  const querySnapshot = await getDocs(
-    query(
-      likesCollection,
-      where("filmId", "==", id),
-      where("user", "==", user)
-    )
-  );
-  const queryDislike = await getDocs(
-    query(collection(db, "dislikes"), where("filmId", "==", id), where("user", "==", user))
-  );
-
-  if (querySnapshot.size === 0) {
-    try {
-      if (queryDislike.size > 0) {
-        await deleteDoc(queryDislike.docs[0].ref);
-        console.log("Dislike supprimé");
-      } 
-      await addDoc(likesCollection, {
-        filmId: id,
-        user: user,
-      });
-      console.log("Like ajouté");
-    } catch (error) {
-      console.error("Error adding document: ", error);
+    if (!id || !user) {
+        return;
     }
-  } else {
-    try {
-      await deleteDoc(querySnapshot.docs[0].ref);
-      console.log("Like supprimé");
-    } catch (error) {
-      console.error("Error deleting document: ", error);
+
+    const likesCollection = collection(db, "likes");
+
+    const querySnapshot = await getDocs(
+        query(
+            likesCollection,
+            where("filmId", "==", id),
+            where("user", "==", user)
+        )
+    );
+    const queryDislike = await getDocs(
+        query(collection(db, "dislikes"), where("filmId", "==", id), where("user", "==", user))
+    );
+
+    if (querySnapshot.size === 0) {
+        try {
+            if (queryDislike.size > 0) {
+                await deleteDoc(queryDislike.docs[0].ref);
+                console.log("Dislike supprimé");
+            }
+            await addDoc(likesCollection, {
+                filmId: id,
+                user: user,
+            });
+            console.log("Like ajouté");
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+    } else {
+        try {
+            await deleteDoc(querySnapshot.docs[0].ref);
+            console.log("Like supprimé");
+        } catch (error) {
+            console.error("Error deleting document: ", error);
+        }
     }
-  }
 }
 
 async function dislikes(id?: string) {
-  const user = auth.currentUser?.uid;
+    const user = auth.currentUser?.uid;
 
-  if (!id || !user) {
-    return;
-  }
-
-  const dislikesCollection = collection(db, "dislikes");
-
-  const querySnapshot = await getDocs(
-    query(dislikesCollection, where("filmId", "==", id), where("user", "==", user))
-  );
-  const queryLike = await getDocs(
-    query(collection(db, "likes"), where("filmId", "==", id), where("user", "==", user))
-  );
-
-  if (querySnapshot.size === 0) {
-    try {
-      if (queryLike.size > 0){
-        await deleteDoc(queryLike.docs[0].ref);
-        console.log("Like supprimé");
-      } 
-      await addDoc(dislikesCollection, {
-        filmId: id,
-        user: user,
-      });
-      console.log("Dislike ajouté");
-    } catch (error) {
-      console.error("Error adding document: ", error);
+    if (!id || !user) {
+        return;
     }
-  } else {
-    try {
-      await deleteDoc(querySnapshot.docs[0].ref);
-      console.log("Dislike supprimé");
-    } catch (error) {
-      console.error("Error deleting document: ", error);
+
+    const dislikesCollection = collection(db, "dislikes");
+
+    const querySnapshot = await getDocs(
+        query(dislikesCollection, where("filmId", "==", id), where("user", "==", user))
+    );
+    const queryLike = await getDocs(
+        query(collection(db, "likes"), where("filmId", "==", id), where("user", "==", user))
+    );
+
+    if (querySnapshot.size === 0) {
+        try {
+            if (queryLike.size > 0) {
+                await deleteDoc(queryLike.docs[0].ref);
+                console.log("Like supprimé");
+            }
+            await addDoc(dislikesCollection, {
+                filmId: id,
+                user: user,
+            });
+            console.log("Dislike ajouté");
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+    } else {
+        try {
+            await deleteDoc(querySnapshot.docs[0].ref);
+            console.log("Dislike supprimé");
+        } catch (error) {
+            console.error("Error deleting document: ", error);
+        }
     }
-  }
 }
 
 async function addComment(id?: string, comment?: string) {
-  const user = auth.currentUser?.uid;
-  if (!id || !user) {
-    return;
-  }
-  const commentsCollection = collection(db, "comments");
-
-    try {
-      await addDoc(commentsCollection, {
-        filmId: id,
-        user: user,
-        comment: comment,
-      });
-      console.log("Commentaire ajouté");
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
-  }
-
-  async function getComment(id?: string) {
     const user = auth.currentUser?.uid;
     if (!id || !user) {
-      console.log("id",id)
-      console.log("user",user)
-      return;
+        return;
+    }
+    const commentsCollection = collection(db, "comments");
+
+    try {
+        await addDoc(commentsCollection, {
+            filmId: id,
+            user: user,
+            comment: comment,
+        });
+        console.log("Commentaire ajouté");
+    } catch (error) {
+        console.error("Error adding document: ", error);
+    }
+}
+
+export async function getAllFollowed() {
+    const user = auth.currentUser?.uid;
+    if (!user) {
+        return;
+    }
+    const followedCollection = collection(db, "followed");
+
+    const querySnapshot = await getDocs(query(followedCollection, where("user", "==", user)));
+
+    return querySnapshot.docs.map((doc) => doc.data());
+}
+
+async function getComment(id?: string) {
+    const user = auth.currentUser?.uid;
+    if (!id || !user) {
+        console.log("id", id)
+        console.log("user", user)
+        return;
     }
     const commentsCollection = collection(db, "comments");
 
     const querySnapshot = await getDocs(
-      query(
-        commentsCollection,
-        where("filmId", "==", id)
-      )
+        query(
+            commentsCollection,
+            where("filmId", "==", id)
+        )
     );
     console.log("query function", querySnapshot)
-      return querySnapshot
+    return querySnapshot
 }
 
 export {auth, db, provider, addFollowed, likes, dislikes, addComment, getComment, useAuthState};

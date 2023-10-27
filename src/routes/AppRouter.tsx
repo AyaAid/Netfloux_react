@@ -6,6 +6,7 @@ import Home from "../views/Home";
 import DetailFilm from "../views/detailFilm/DetailFilm";
 import Calendar from "../views/calendar/Calendar";
 import { useAuthState } from "../utils/firebase";
+import Profil from "../components/Profil/Profil";
 
 function AppRouter() {
   const user = useAuthState();
@@ -27,6 +28,10 @@ function AppRouter() {
           <Route
             path="/calendar"
             element={user !== null ? <Calendar /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/profil"
+            element={user !== null ? <Profil /> : <Navigate to="/" />}
           />
         </Routes>
       </BrowserRouter>

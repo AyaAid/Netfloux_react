@@ -191,7 +191,7 @@ h2 {
 }
 
 .comment-list {
-  border: 1px solid #ccc;
+  border-top: 1px solid var(--terciere);
   padding: 10px;
   overflow-y: scroll;
   max-height: 300px;
@@ -209,6 +209,24 @@ h2 {
   height: auto;
   width: 100%;
   background-size: cover;
+}
+
+.detail-film-avis-row{
+  display: flex;
+  width: 100%;
+justify-content: center;
+}
+
+.text-entry{
+  resize: none;
+}
+
+.comment{
+  border: 0.5px solid var(--terciere);
+  margin-bottom: 20px;
+  width: 100%;
+  background-color: #000;
+  padding: 15px;
 }
 
 @keyframes animation {
@@ -250,10 +268,8 @@ h2 {
     flex-direction: row;
   }
 
-  .detail-film-description-text, .detail-film-avis-text{
-    height: 150px;
-    overflow-y: scroll;
-}
+
+
   
 }
 

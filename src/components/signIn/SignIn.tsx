@@ -9,12 +9,13 @@ export default function SignIn() {
   const [value, setValue] = useState<string | null>("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const signIng = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) =>  {
         console.log(userCredential)
+        localStorage.setItem("user", JSON.stringify(users));
         navigate("/home");
     }).catch((error)=>{
         console.log(error)

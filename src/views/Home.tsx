@@ -3,8 +3,10 @@ import Navbar from '../components/navbar/Navbar';
 import '../assets/styles/Style.scss';
 import ShowList from '../components/filmlist/ShowList';
 import { getGenres } from '../utils/api';
+import { useAuthState } from '../utils/firebase';
 
 function Home() {
+    const user = useAuthState();
     const [types, setTypes] = useState<{ name: string; slug: string; }[]>([]);
 
     useEffect(() => {
@@ -17,7 +19,7 @@ function Home() {
             });
     }, []);
 
-    // Define an array of types to exclude
+
     const excludedTypes = [
         'Biography',
         'Holiday',

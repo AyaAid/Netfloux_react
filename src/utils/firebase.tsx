@@ -1,6 +1,7 @@
 import {initializeApp} from "firebase/app";
-import {getAuth, GoogleAuthProvider} from "firebase/auth";
+import {getAuth, GoogleAuthProvider, onAuthStateChanged, User} from "firebase/auth";
 import {addDoc, collection, deleteDoc, getDocs, getFirestore, query, where} from "@firebase/firestore"
+import { useEffect, useState } from "react";
 
 const firebaseConfig = initializeApp({
     apiKey: `${process.env.REACT_APP_API_KEY}`,
@@ -15,6 +16,26 @@ const firebaseConfig = initializeApp({
 const auth = getAuth(firebaseConfig);
 const db = getFirestore(firebaseConfig);
 const provider = new GoogleAuthProvider();
+
+function useAuthState() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      if (authUser) {
+        setUser(authUser);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  return user;
+}
 
 async function addFollowed(id?: string) {
     const user = auth.currentUser?.uid;
@@ -131,4 +152,42 @@ async function dislikes(id?: string) {
   }
 }
 
-export {auth, db, provider, addFollowed, likes, dislikes};
+async function addComment(id?: string, comment?: string) {
+  const user = auth.currentUser?.uid;
+  if (!id || !user) {
+    return;
+  }
+  const commentsCollection = collection(db, "comments");
+
+    try {
+      await addDoc(commentsCollection, {
+        filmId: id,
+        user: user,
+        comment: comment,
+      });
+      console.log("Commentaire ajouté");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  }
+
+  async function getComment(id?: string) {
+    const user = auth.currentUser?.uid;
+    if (!id || !user) {
+      console.log("id",id)
+      console.log("user",user)
+      return;
+    }
+    const commentsCollection = collection(db, "comments");
+
+    const querySnapshot = await getDocs(
+      query(
+        commentsCollection,
+        where("filmId", "==", id)
+      )
+    );
+    console.log("query function", querySnapshot)
+      return querySnapshot
+}
+
+export {auth, db, provider, addFollowed, likes, dislikes, addComment, getComment, useAuthState};

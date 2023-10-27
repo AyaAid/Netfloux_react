@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../../utils/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { User, createUserWithEmailAndPassword } from "firebase/auth";
 import "../signIn/SignIn.scss";
 import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+  const [users, setUsers] = useState<User | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const signUp = (e: { preventDefault: () => void }) => {
@@ -12,6 +13,7 @@ export default function SignUp() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
+        navigate("/home");
       })
       .catch((error) => {
         console.log(error);
@@ -23,6 +25,15 @@ export default function SignUp() {
   const redirectToLogin = () => {
     navigate('/')
 }
+
+ useEffect(() => {
+   const savedUser = localStorage.getItem("user");
+   const currentUser = savedUser ? JSON.parse(savedUser) : null;
+   if (currentUser) {
+     setUsers(currentUser);
+     navigate("/home");
+   }
+ }, [navigate]);
 
 
   return (

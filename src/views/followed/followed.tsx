@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getAllFollowed } from "../../utils/firebase";
 import { getShowsDetails } from "../../utils/api";
+import Navbar from "../../components/navbar/Navbar";
+import "./Followed.scss";
 
 export default function Followed() {
     const [followed, setFollowed] = useState<any[]>([]);
@@ -27,16 +29,21 @@ export default function Followed() {
     }, []);
 
     return (
-        <div>
-            <h1>Followed</h1>
-            <div>
+        <>
+        <Navbar/>
+         <div>
+            <h2>Mes séries</h2>
+            <div className="carousel-film-followed">
                 {followed.map((item: any) => (
-                    <div key={item.ids.trakt}>
-                        <h2>{item.title}</h2>
+                    <div className="film-card-followed" key={item.ids.trakt}>
+                        
+                        
                         <img src={item.images.poster} alt="" />
                     </div>
                 ))}
             </div>
         </div>
+        </>
+       
     );
 }

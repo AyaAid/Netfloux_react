@@ -1,23 +1,40 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../../utils/firebase";
-import { reauthenticateWithCredential, EmailAuthProvider , updatePassword } from "firebase/auth";
-
-
-
-
-
-export default function Profil(){
-
+import Navbar from "../navbar/Navbar";
+import "./Profil.scss";
+import ModifyEmail from "./ModifyEmail";
+import ModifyPassword from "./ModifyPassword";
+export default function Profil() {
+    const [email, setEmail] = useState<string>("");
     const user = auth.currentUser;
-    const email = localStorage.getItem("email");
-    console.log(email);
-    return (
-        <div>
-          <form>
-            <h1>Profil</h1>
-            <button>Log In</button>
-          </form>
-        </div>
-      );
-}
 
+    useEffect(() => {
+        if (user) {
+            const emailFromLocalStorage = localStorage.getItem("email");
+            setEmail(emailFromLocalStorage || "");
+        }
+    }, [user]);
+
+
+  return (
+    <>
+      <Navbar />
+        <form>
+          {user ? (
+            <>
+              <div className="formLogin-centre2">
+
+                <div className="nav-profil2">
+                </div>
+                <p>Email : {email}</p>
+                <ModifyEmail />
+                <ModifyPassword />
+              </div>
+            </>
+          ) : (
+            <p>Veuillez vous connecter pour afficher l'email.</p>
+          )}
+        </form>
+    </>
+  );
+}

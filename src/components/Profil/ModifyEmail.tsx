@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { auth } from "../../utils/firebase";
 import { updateEmail } from "firebase/auth";
-
+import "./Profil.scss";
 
 
 
@@ -33,10 +33,14 @@ export default function ModifyEmail(){
             <input
               type="email"
               placeholder="Entre ton nouveau email"
+              className="input2"
               value={newemail}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button type="submit">Update Email</button>
+            <div>
+              <button type="submit" className="backgroundbutton submit2">Update Email</button>
+            </div>
+
           </form>
         </div>
       );

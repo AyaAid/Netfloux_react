@@ -16,8 +16,7 @@ export default function Navbar() {
     }
 
       const handleSignOut = () => {
-        console.log(auth)
-        signOut(auth)
+        auth.signOut()
           .then(() => {
             navigate('/')
           })

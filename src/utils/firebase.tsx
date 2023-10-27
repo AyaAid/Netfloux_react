@@ -206,4 +206,22 @@ async function getComment(id?: string) {
     return querySnapshot
 }
 
-export {auth, db, provider, addFollowed, likes, dislikes, addComment, getComment, useAuthState};
+async function addNotification(id?: string) {
+    const user = auth.currentUser?.uid;
+    if (!id || !user) {
+        return;
+    }
+    const notificationCollection = collection(db, "notifications");
+
+    try {
+        await addDoc(notificationCollection, {
+            filmId: id,
+            user: user,
+        });
+        console.log("Notification ajouté");
+    } catch (error) {
+        console.error("Error adding document: ", error);
+    }
+}
+
+export {auth, db, provider, addFollowed, likes, dislikes, addComment, getComment, useAuthState, addNotification};

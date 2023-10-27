@@ -12,6 +12,7 @@ h3 {
 
 .film-carousel {
   overflow-x: scroll;
+  overflow-y: hidden;
   border-top: 0.5px solid var(--terciere);
   border-bottom: 0.5px solid var(--terciere);
   height: 220px;

@@ -61,15 +61,15 @@ async function getImage(ids: string) {
 }
 
 async function getTraktShowsByDate(startDate: String, days: Number) {
-  try {
-    const endpoint = `/calendars/all/shows/${startDate}/${days}`;
+    try {
+        const endpoint = `/calendars/all/shows/${startDate}/${days}`;
 
-    const response = await api.get(endpoint);
-    return response.data;
-  } catch (error) {
-    console.error("Axios Error:", error);
-    throw error;
-  }
+        const response = await api.get(endpoint);
+        return response.data;
+    } catch (error) {
+        console.error("Axios Error:", error);
+        throw error;
+    }
 }
 
 async function getShowsDetails(ids: string) {
@@ -98,6 +98,17 @@ async function getMembers(ids: string) {
 export async function searchShows(query: string) {
     try {
         const response = await api.get(`/search/show?query=${query}`);
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.error('Axios Error:', error);
+        throw error;
+    }
+}
+
+async function getNewEpisodesInNext24Hours() {
+    try {
+        const response = await api.get(`/calendars/all/shows/new?start_date=today&days=1`);
         return response.data;
     } catch (error) {
         console.error('Axios Error:', error);
@@ -115,4 +126,4 @@ async function getGenres() {
     }
 }
 
-export {getShowsList, getShowsDetails, getTraktShowsByDate, getGenres};
+export {getShowsList, getShowsDetails, getTraktShowsByDate, getGenres, getNewEpisodesInNext24Hours};

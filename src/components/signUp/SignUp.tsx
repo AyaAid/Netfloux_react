@@ -12,6 +12,7 @@ export default function SignUp() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
+        localStorage.setItem("user", JSON.stringify(users));
         navigate("/home");
       })
       .catch((error) => {
@@ -23,14 +24,14 @@ export default function SignUp() {
   const redirectToLogin = () => {
     navigate("/");
   };
-  useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    const currentUser = savedUser ? JSON.parse(savedUser) : null;
-    if (currentUser) {
-      setUsers(currentUser);
-      navigate("/home");
-    }
-  }, [navigate]);
+useEffect(() => {
+  const savedUser = localStorage.getItem("user");
+  const currentUser = savedUser ? JSON.parse(savedUser) : null;
+  if (currentUser) {
+    setUsers(currentUser);
+  }
+}, []);
+
   return (
     <div className="formRegister">
       <div className="formLogin-centre">

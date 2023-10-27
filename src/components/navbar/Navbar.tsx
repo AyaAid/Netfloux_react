@@ -3,7 +3,6 @@ import "./Navbar.scss";
 import {useNavigate} from "react-router-dom";
 import {searchShows} from "../../utils/api";
 import { auth } from "../../utils/firebase";
-import { signOut } from "firebase/auth";
 
 export default function Navbar() {
     const navigate = useNavigate();
@@ -19,8 +18,7 @@ export default function Navbar() {
     };
 
       const handleSignOut = () => {
-        console.log(auth)
-        signOut(auth)
+        auth.signOut()
           .then(() => {
             navigate('/')
           })

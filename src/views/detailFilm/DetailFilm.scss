@@ -1,66 +1,224 @@
-.column-film{
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 60px);
+*{
+  color: white;
 }
 
-.detail-film-img{
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 35%;
-    width: 100%;
+.column-film {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  animation: animation 1s ease-in-out;
 }
 
-.detail-film-info{
-    height: 180px;
-    display: flex;
+.detail-film-img {
+  height: 35%;
+  width: 100%;
+  position: relative;
 }
 
-.detail-film-info-left, .detail-film-info-right{
-    flex: 1;
-    display: flex;
-    align-items: center;
+.logos{
+  z-index: 100;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 150px;
+  top: 18px;
+  right: 18px;
 }
-.detail-film-info-left ul, .detail-film-info-right ul{
-    margin-left: 5%;
-    display: flex;
-    flex-direction: column;
+
+.detail-film-fav {
+  cursor: pointer;
+  height: 35px;
+  width: 100%;
+  background-image: url("/assets/images/star.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-film-fav-followed {
+  cursor: pointer;
+  height: 35px;
+  width: 35px;
+  background-image: url("/assets/images/star-2.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-film-add-like {
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  background-image: url("/assets/images/vote-positif.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-film-add {
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  background-image: url("/assets/images/vote-positif-white.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-film-adding {
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  background-image: url("/assets/images/vote-negatif-white.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-film-adding-dislike {
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  background-image: url("/assets/images/vote-negatif.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-film-img img {
+  height: 100%;
+  width: 100%;
+}
+
+.detail-film-info-row {
+  display: flex;
+}
+
+.detail-film-info {
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  border-top: 1px solid var(--terciere);
+ 
+  display: flex;
+}
+.detail-film-info-div-title{
+    border-bottom: 1px solid var(--terciere);
+    margin-bottom: 12px;
+}
+
+h2 {
+  padding-top: 10px;
+  margin-bottom: 12px;
+  text-align: center;
+  
+}
+
+.detail-film-description-title {
+  display: flex;
+}
+
+.detail-film-description-title h2, .detail-film-avis-title h2 {
+  margin: auto;
+  padding-bottom: 10px;
+}
+
+.detail-film-info-left,
+.detail-film-info-right {
+  flex: 1;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.detail-film-info-left ul,
+.detail-film-info-right ul {
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.detail-film-info-left ul li,
+.detail-film-info-right ul li {
+  margin: 4px;
+  font-size: 1.2rem;
+}
+
+.detail-film-info-right {
+  flex: 1;
+}
+
+.detail-film-description, .detail-film-avis {
+  flex: 1;
+}
+
+.detail-film-description-title, .detail-film-avis-title {
+  display: flex;
+  border-top: 0.5px solid var(--terciere);
+  border-bottom: 0.5px solid var(--terciere);
+}
+
+.detail-film-description-title p {
+  margin: auto 0 auto 20px;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.detail-film-description-text, .detail-film-avis-text {
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.detail-film-img {
+  height: auto;
+  width: 100%;
+  background-size: cover;
+}
+
+@keyframes animation {
+    0%{
+        transform: translate(0, 100%);
+    }
+    100%{
+        transform: translate(0, 0);
+    }
     
 }
-.detail-film-info-left ul li, .detail-film-info-right ul li{
-    margin: 4px;
-    font-size: 1.2rem;
-}
 
-.detail-film-info-right{
-    flex: 1;
+/*RESPONSIVE -768px 1366px et +1920px */
+@media screen and (min-width: 768px) {
+  .detail-film-img img {
+    height: 99%;
+    filter: brightness(40%) grayscale(60%) blur(5px);
+  }
+  .detail-film-img {
+    z-index: 1;
+    height: 100%;
+  }
+  .detail-film-fav, .detail-film-fav-followed {
+    height: 45px;
+    width: 45px;
+  }
 
-}
+  .detail-film-info {
+    position: absolute;
+    flex-direction: column;
+    top: 60px;
+    border: 0px;
+    margin-left: 18%;
+    margin-right: 18%;
+  }
 
-.detail-film-description{
-    flex: 1;
-
-}
-
-.detail-film-description-title{
-    height: 80px;
+  .detail-film-info-row {
     display: flex;
-   border-top: 0.5px solid var(--terciere);
-   border-bottom: 0.5px solid var(--terciere);
-   margin-left: 5%;
-   margin-right: 5%;
+    flex-direction: row;
+  }
 
-}
-
-.detail-film-description-title p{
-    margin: auto 0 auto 20px;
-    font-size: 1.2rem;
-    color: white;
-}
-
-.detail-film-description-text{
-    padding: 20px;
-    height: 220px;
+  .detail-film-description-text, .detail-film-avis-text{
+    height: 150px;
     overflow-y: scroll;
 }
+  
+}
+
+@media screen and (min-width: 1366px) {
+}
+
+@media screen and (min-width: 1920px) {
+}
+/*RESPONSIVE -768px 1366px et +1920px */

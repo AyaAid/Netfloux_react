@@ -1,23 +1,33 @@
 import React from "react";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Auth from "../views/Auth";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
+import Login from "../views/connexion/Login";
+import Register from "../views/connexion/Register";
 import Home from "../views/Home";
 import DetailFilm from "../views/detailFilm/DetailFilm";
 import Calendar from "../views/calendar/Calendar";
-import Modify from "../views/Modify";
-import Profil from "../components/Profil/Profil";
+import { useAuthState } from "../utils/firebase";
 
 function AppRouter() {
+  const user = useAuthState();
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Auth />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/film/:filmId" element={<DetailFilm />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/modify" element={<Modify />} />
-          <Route path="/profil" element={<Profil />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/home"
+            element={user !== null ? <Home /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/film/:filmId"
+            element={user !== null ? <DetailFilm /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/calendar"
+            element={user !== null ? <Calendar /> : <Navigate to="/" />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

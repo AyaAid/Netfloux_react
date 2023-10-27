@@ -61,6 +61,7 @@ header {
 
 /*MENU DEROULANT POUR MOBILE*/
 .menu-deroulant {
+  z-index: 100;
   position: absolute;
   top: 60px;
   height: calc(100% - 60px);
@@ -215,6 +216,7 @@ header {
 
 /*MENU DEROULANT POUR GRAND ECRAN*/
 .menu-deroulant-high-screen {
+  z-index: 100;
   display: none;
   position: absolute;
   top: 60px;

@@ -40,7 +40,6 @@ async function getShowsList(type?: string, page?: number) {
             })
         );
 
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Axios Error:', error);
@@ -61,13 +60,23 @@ async function getImage(ids: string) {
     }
 }
 
+async function getTraktShowsByDate(startDate: String, days: Number) {
+  try {
+    const endpoint = `/calendars/all/shows/${startDate}/${days}`;
+
+    const response = await api.get(endpoint);
+    return response.data;
+  } catch (error) {
+    console.error("Axios Error:", error);
+    throw error;
+  }
+}
+
 async function getShowsDetails(ids: string) {
     try {
         const response = await api.get(`/shows/${ids}?extended=full`);
         response.data.images = await getImage(response.data.ids.tmdb);
         response.data.actors = await getMembers(response.data.ids.trakt);
-
-        console.log(response.data);
 
         return response.data;
     } catch (error) {
@@ -86,4 +95,24 @@ async function getMembers(ids: string) {
     }
 }
 
-export {getShowsList, getShowsDetails};
+export async function searchShows(query: string) {
+    try {
+        const response = await api.get(`/search/show?query=${query}`);
+        return response.data;
+    } catch (error) {
+        console.error('Axios Error:', error);
+        throw error;
+    }
+}
+
+async function getGenres() {
+    try {
+        const response = await api.get(`/genres/shows`);
+        return response.data;
+    } catch (error) {
+        console.error('Axios Error:', error);
+        throw error;
+    }
+}
+
+export {getShowsList, getShowsDetails, getTraktShowsByDate, getGenres};

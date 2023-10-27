@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { User, getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 
 export default function AuthDetails() {
@@ -12,7 +12,7 @@ export default function AuthDetails() {
             }
         });
         return ()=>{listen()}
-    }, []);
+    });
 
     const auth = getAuth();
 

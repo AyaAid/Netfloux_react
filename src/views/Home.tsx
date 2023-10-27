@@ -17,7 +17,6 @@ function Home() {
             });
     }, []);
 
-    // Define an array of types to exclude
     const excludedTypes = [
         'Biography',
         'Holiday',
@@ -29,7 +28,6 @@ function Home() {
         'Sporting Event',
     ];
 
-    // Filter the types array to exclude certain types
     const filteredTypes = types.filter(type => !excludedTypes.includes(type.name));
 
     return (

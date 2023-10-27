@@ -101,7 +101,6 @@ export default function Navbar() {
                   <a onClick={redirectToCalendar}>Calendrier</a>
                 </li>
 
-                <li>Reprendre la lecture</li>
               </ul>
             </div>
             <div className="menu-deroulant-filtre">

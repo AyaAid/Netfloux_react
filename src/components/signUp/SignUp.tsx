@@ -12,7 +12,6 @@ export default function SignUp() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
-        localStorage.setItem("user", JSON.stringify(users));
         navigate("/home");
       })
       .catch((error) => {

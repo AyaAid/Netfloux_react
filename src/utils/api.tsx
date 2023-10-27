@@ -40,7 +40,6 @@ async function getShowsList(type?: string, page?: number) {
             })
         );
 
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Axios Error:', error);
@@ -79,8 +78,6 @@ async function getShowsDetails(ids: string) {
         response.data.images = await getImage(response.data.ids.tmdb);
         response.data.actors = await getMembers(response.data.ids.trakt);
 
-        console.log(response.data);
-
         return response.data;
     } catch (error) {
         console.error('Axios Error:', error);
@@ -101,7 +98,6 @@ async function getMembers(ids: string) {
 export async function searchShows(query: string) {
     try {
         const response = await api.get(`/search/show?query=${query}`);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Axios Error:', error);
@@ -109,4 +105,14 @@ export async function searchShows(query: string) {
     }
 }
 
-export {getShowsList, getShowsDetails, getTraktShowsByDate};
+async function getGenres() {
+    try {
+        const response = await api.get(`/genres/shows`);
+        return response.data;
+    } catch (error) {
+        console.error('Axios Error:', error);
+        throw error;
+    }
+}
+
+export {getShowsList, getShowsDetails, getTraktShowsByDate, getGenres};

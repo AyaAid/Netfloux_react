@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { auth, provider } from "../../utils/firebase";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { User, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import "./SignIn.scss";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
+  const [users, setUsers] = useState<User | null>(null);
   const [value, setValue] = useState<string | null>("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
   const signIng = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) =>  {
         console.log(userCredential)
+        navigate("/home");
     }).catch((error)=>{
         console.log(error)
     })
@@ -35,17 +38,14 @@ export default function SignIn() {
     })
   }
 
-   useEffect(() => {
-     const storedEmail = localStorage.getItem("email");
-     if (storedEmail !== null) {
-       setValue(storedEmail);
-     }
-
-     const user = auth.currentUser;
-     if (user) {
-       navigate("/home");
-     }
-   }, [navigate]);
+ useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    const currentUser = savedUser ? JSON.parse(savedUser) : null;
+    if (currentUser) {
+      setUsers(currentUser);
+      navigate('/home'); 
+    }
+  }, [navigate]);
 
   return (
     <div className="formLogin">

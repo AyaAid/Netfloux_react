@@ -3,7 +3,13 @@ import Navbar from "../../components/navbar/Navbar";
 import "../detailFilm/DetailFilm.scss";
 import { getShowsDetails } from "../../utils/api";
 import { useParams } from "react-router-dom";
-import { addFollowed, likes, dislikes, getComment, addComment } from "../../utils/firebase";
+import {
+  addFollowed,
+  likes,
+  dislikes,
+  getComment,
+  addComment,
+} from "../../utils/firebase";
 
 export default function DetailFilm() {
   const { filmId } = useParams();
@@ -14,47 +20,45 @@ export default function DetailFilm() {
   const [comment, setComment] = React.useState("");
   const [comments, setComments] = React.useState<string[]>([]);
 
-async function fetchComments() {
-    
-  if (filmId) {
-    try {
-      const querySnapshot = await getComment(filmId);
-      console.log("query snapshot", querySnapshot)
-      console.log(filmId)
+  async function fetchComments() {
+    if (filmId) {
+      try {
+        const querySnapshot = await getComment(filmId);
+        console.log("query snapshot", querySnapshot);
+        console.log(filmId);
 
-      if (querySnapshot) {
-        const commentsData: string[] = [];
-        querySnapshot.docs.forEach((doc) => {
-          commentsData.push(doc.data().comment);
-        });
-        console.log("comment data", commentsData);
-        setComments(commentsData);
-      } else {
-        console.error("Aucun commentaire trouvé pour cet ID de film.");
+        if (querySnapshot) {
+          const commentsData: string[] = [];
+          querySnapshot.docs.forEach((doc) => {
+            commentsData.push(doc.data().comment);
+          });
+          console.log("comment data", commentsData);
+          setComments(commentsData);
+        } else {
+          console.error("Aucun commentaire trouvé pour cet ID de film.");
+        }
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des commentaires : ",
+          error
+        );
       }
-    } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des commentaires : ",
-        error
-      );
     }
   }
-}
 
-  const handleClick=()=> {
+  const handleClick = () => {
     addComment(filmId, comment)
-    .then((res: any) => console.log("Add Comment Success", res))
-    .catch((err: Error) => console.error('Error', err));
+      .then((res: any) => console.log("Add Comment Success", res))
+      .catch((err: Error) => console.error("Error", err));
     console.log(getComment);
     console.log(comment);
-  }
+  };
 
   React.useEffect(() => {
     if (filmId != null) {
       getShowsDetails(filmId).then((response) => {
         setFilm(response);
       });
-      
     }
     fetchComments();
   }, [filmId]);
@@ -169,20 +173,21 @@ async function fetchComments() {
                   <h2>Avis</h2>
                 </div>
                 <div className="detail-film-avis-text">
-  <textarea
-    placeholder="Votre avis"
-    value={comment}
-    onChange={(e) => setComment(e.target.value)}
-  ></textarea>
-  <button onClick={handleClick}>Submit</button>
-</div>
-<div className="comment-separator"></div>
-<div className="comment-list">
-  {comments.map((commentData, index) => (
-    <div key={index}>{commentData}</div>
-  ))}
-</div>
-
+                  <div className="detail-film-avis-row">
+                    <textarea
+                      className="text-entry"
+                      placeholder="Votre avis"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                    <button className="submit" onClick={handleClick}>Submit</button>
+                  </div>
+                </div>
+                <div className="comment-list">
+                  {comments.map((commentData, index) => (
+                    <div className="comment" key={index}>{commentData}</div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

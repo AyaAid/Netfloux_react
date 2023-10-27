@@ -14,6 +14,9 @@ export default function Navbar() {
     const redirectToCalendar = () => {
         navigate('/calendar')
     }
+    const redirectToProfil = () => {
+      navigate("/profil");
+    };
 
       const handleSignOut = () => {
         console.log(auth)
@@ -46,7 +49,7 @@ export default function Navbar() {
                 <li>
                   <a onClick={redirectToCalendar}>Calendrier</a>
                 </li>
-                <li>Mes films</li>
+                <li>Mes Séries</li>
                 <li><a onClick={handleSignOut}>Se Déconnecter</a></li>
                 <li>
                   <div
@@ -75,7 +78,7 @@ export default function Navbar() {
                   <p>0</p>
                 </div>
               </div>
-              <div className="nav-profil"></div>
+              <div className="nav-profil" onClick={redirectToProfil}></div>
             </div>
           </header>
 
@@ -88,7 +91,7 @@ export default function Navbar() {
                     <p className="menu-deroulant-profil-pseudo">Kilian.rdgs</p>
                   </div>
                 </li>
-                <li>Mes films</li>
+                <li>Mes Séries</li>
                 <li>Se déconnecter</li>
               </ul>
             </div>

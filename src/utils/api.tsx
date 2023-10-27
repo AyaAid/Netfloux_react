@@ -108,7 +108,7 @@ export async function searchShows(query: string) {
 
 async function getNewEpisodesInNext24Hours() {
     try {
-        const response = await api.get(`/calendars/all/shows/new?start_date=today&days=1`);
+        const response = await api.get(`/calendars/all/shows/${new Date()}/1`);
         return response.data;
     } catch (error) {
         console.error('Axios Error:', error);

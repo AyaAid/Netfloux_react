@@ -5,7 +5,7 @@ import Register from "../views/connexion/Register";
 import Home from "../views/Home";
 import DetailFilm from "../views/detailFilm/DetailFilm";
 import Calendar from "../views/calendar/Calendar";
-import { useAuthState } from "../utils/firebase";
+import {useAuthState} from "../utils/firebase";
 import Profil from "../components/Profil/Profil";
 import Followed from "../views/followed/followed";
 
@@ -19,42 +19,6 @@ function AppRouter() {
         }
     }, [user]);
 
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={isLoading ? null : <Login />} />
-          <Route path="/register" element={isLoading ? null : <Register />} />
-          <Route
-            path="/home"
-            element={
-              isLoading ? null : user !== null ? <Home /> : <Navigate to="/" />
-            }
-          />
-          <Route
-            path="/film/:filmId"
-            element={
-              isLoading ? null : user !== null ? (
-                <DetailFilm />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route
-            path="/calendar"
-            element={
-              isLoading ? null : user !== null ? (
-                <Calendar />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          
-      </BrowserRouter>
-    </div>
-  );
     return (
         <div className="App">
             <BrowserRouter>
@@ -97,16 +61,16 @@ function AppRouter() {
                             )
                         }
                     />
-                  <Route
-                    path="/profil"
-                    element={
-                      isLoading ? null : user !== null ? (
-                        <Profil />
-                      ) : (
-                        <Navigate to="/" />
-                      )
-                    }
-                  />
+                    <Route
+                        path="/profil"
+                        element={
+                            isLoading ? null : user !== null ? (
+                                <Profil/>
+                            ) : (
+                                <Navigate to="/"/>
+                            )
+                        }
+                    />
                 </Routes>
             </BrowserRouter>
         </div>

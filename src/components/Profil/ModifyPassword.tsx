@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { auth } from "../../utils/firebase";
 import { reauthenticateWithCredential, EmailAuthProvider , updatePassword } from "firebase/auth";
-
+import "./Profil.scss";
 
 
 
@@ -34,10 +34,11 @@ export default function ModifyPassword(){
             <input
               type="password"
               placeholder="Entre ton nouveau mot de passe"
+              className="input2"
               value={newpassword}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="submit">Update Password</button>
+            <button type="submit" className="backgroundbutton submit2">Update Password</button>
           </form>
         </div>
       );

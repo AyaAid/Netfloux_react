@@ -1,6 +1,6 @@
 import React from "react";
-import SignIn from "../components/auth/SignIn";
-import SignUp from "../components/auth/SignUp";
+import SignIn from "../components/signIn/SignIn";
+import SignUp from "../components/signUp/SignUp";
 import AuthDetails from "../components/sinIn/AuthDetails";
 import Navbar from "../components/navbar/Navbar";
 function Auth() {
